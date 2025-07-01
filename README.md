@@ -35,7 +35,7 @@ PORT:
 OUTPUT ON CHATAPP
     ![image](https://github.com/user-attachments/assets/a910868e-f48a-46f2-814a-e63b69b2c60a)
 
-OUTPUT on the ChatApp#RB A5D2X to PC Chat APP
+#RB A5D2X to PC Chat APP
 
     1)To Connect the Board on your PC Through the USB
     2)Give me the Ethernet connection on your board 
