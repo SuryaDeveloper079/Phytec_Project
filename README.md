@@ -33,7 +33,6 @@ PORT:
     2) 1024 - 49151 Registerd Ports 
     3) 49152 - 65535 Private and tempory Port
 OUTPUT ON CHATAPP
-
     ![image](https://github.com/user-attachments/assets/a910868e-f48a-46f2-814a-e63b69b2c60a)
 
 OUTPUT on the ChatApp#RB A5D2X to PC Chat APP
@@ -41,7 +40,7 @@ OUTPUT on the ChatApp#RB A5D2X to PC Chat APP
     1)To Connect the Board on your PC Through the USB
     2)Give me the Ethernet connection on your board 
  	    i)To create the Ethernet Profile
- 		    ![image](https://github.com/user-attachments/assets/c33722b1-deff-4ed9-8ba7-24e0fd3b44d3)
+ ![image](https://github.com/user-attachments/assets/c33722b1-deff-4ed9-8ba7-24e0fd3b44d3)
  	    ii)Then to select the Profile
 Run the Host Side  
 
@@ -87,8 +86,7 @@ Run the Board side
 			* ./filename address poart
 				./client 192.168.1.1 8080   
 OUT PUT
-    
-    ![PC_to_Board](https://github.com/user-attachments/assets/86707ac6-a091-4c52-9445-6096f924d687)
+        ![PC_to_Board](https://github.com/user-attachments/assets/86707ac6-a091-4c52-9445-6096f924d687)
 
 
 
