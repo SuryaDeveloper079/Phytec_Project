@@ -4,6 +4,7 @@
 
 #define MESSAGE_MAX_LEN 32
 
+// Finite State Machine States
 typedef enum {
     STATE_WAIT_START,
     STATE_RECEIVING,
@@ -11,6 +12,7 @@ typedef enum {
     STATE_SENDING_RESPONSE
 } State;
 
+// Events that trigger state transitions
 typedef enum {
     EVENT_NONE,
     EVENT_BYTE_RECEIVED,
@@ -18,17 +20,18 @@ typedef enum {
     EVENT_SEND_DONE
 } Event;
 
+// Events that trigger state transitions
 typedef struct {
     uint8_t buffer[MESSAGE_MAX_LEN];
     uint8_t length;
 } Message;
 
+// Global state variables
 State currentState = STATE_WAIT_START;
 Message currentMessage;
 uint8_t byteReceived;
-Event currentEvent = EVENT_NONE;
 
-// Simulate message parsing
+// Function to check if message is complete (ends with newline)
 int is_message_complete(const Message *msg) {
     return msg->length > 0 && msg->buffer[msg->length - 1] == '\n';
 }
@@ -38,13 +41,12 @@ void process_message(const Message *msg) {
     printf("Processing message: %.*s", msg->length, msg->buffer);
 }
 
-// Simulate sending response
+// Simulate sending a response
 void send_response() {
     printf("Sending response: OK\n");
-    currentEvent = EVENT_SEND_DONE;
 }
 
-// FSM Handler
+// FSM Handler Main state machine logic
 void state_machine_run(Event event) {
     switch (currentState) {
         case STATE_WAIT_START:
@@ -60,11 +62,9 @@ void state_machine_run(Event event) {
                 if (currentMessage.length < MESSAGE_MAX_LEN) {
                     currentMessage.buffer[currentMessage.length++] = byteReceived;
                     if (is_message_complete(&currentMessage)) {
-                        currentEvent = EVENT_MESSAGE_COMPLETE;
+                        currentState = STATE_PROCESSING;
                     }
                 }
-            } else if (event == EVENT_MESSAGE_COMPLETE) {
-                currentState = STATE_PROCESSING;
             }
             break;
 
@@ -74,14 +74,11 @@ void state_machine_run(Event event) {
             break;
 
         case STATE_SENDING_RESPONSE:
-    if (event == EVENT_NONE) {
-        send_response();  // Called once
-    } else if (event == EVENT_SEND_DONE) {
-        currentState = STATE_WAIT_START;
-        currentMessage.length = 0;
-    }
-    break;
-
+            send_response();
+            // Reset for next message
+            currentState = STATE_WAIT_START;
+            currentMessage.length = 0;// Reset message buffer
+            break;
 
         default:
             currentState = STATE_WAIT_START;
@@ -89,21 +86,24 @@ void state_machine_run(Event event) {
     }
 }
 
-// Simulated input loop
+// Simulate receiving input character-by-character
 void simulate_input(const char *input) {
-    for (size_t i = 0; i < strlen(input); i++) {
+    size_t len = strlen(input);
+    for (size_t i = 0; i < len; i++) {
         byteReceived = input[i];
-        currentEvent = EVENT_BYTE_RECEIVED;
-        state_machine_run(currentEvent);
+        state_machine_run(EVENT_BYTE_RECEIVED);
 
-        if (currentEvent == EVENT_MESSAGE_COMPLETE) {
-            state_machine_run(EVENT_MESSAGE_COMPLETE);
-            state_machine_run(EVENT_SEND_DONE);
+        
+        // Run processing and response states if triggered
+        if (currentState == STATE_PROCESSING) {
+            state_machine_run(EVENT_NONE); // triggers processing
+            state_machine_run(EVENT_NONE); // triggers sending response
         }
     }
 }
 
 int main(void) {
     simulate_input("Hello, device!\n");
+    simulate_input("How are you?\n");
     return 0;
 }
