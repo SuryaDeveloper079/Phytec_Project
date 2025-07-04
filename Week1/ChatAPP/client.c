@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
     socklen_t len = sizeof(server_addr);    // Length of the server address structure
 
     while (1) {
-        // Send the Message to client
+        // Send the Message to server
         printf("You: ");
         fgets(buffer, BUFFER_SIZE, stdin);  // Read message from standard input (keyboard)
 
