@@ -1,0 +1,107 @@
+EFR32 xG28 Radio Evaluation Board (BRD4001C Rev A01)
+
+#Overview
+	* Silicon Labs EFR32 xG28 dual-band radio board
+		* Supports 2.4 GHz & BLE radio pulses
+		* 868/915 MHz Sub‑GHz radio
+		* Up to +20 dBm RF output
+
+	* On‑board features:
+
+		* QSPI SoC with 1 MB flash and 256 KB RAM
+		* Passive RF switch (new Rev A01)
+		* Connects via wire/ezs starter kit (WSTK) mainboard
+
+#Troubleshooting & Notes
+	* Default speed is 39 MHz, not 78 MHz — confirm clock / sysconfig for your project.
+	* RF output verified at +20 dBm on 868 MHz (Rev A01).
+	* Use WSTK (wireless starter kit) mainboard via 20‑pin header.
+	* Tool: Simplicity Commander for programming/debugging.
+
+#Bootloader & Clock Configuration
+	* Board uses Gecko Serial‑2 Secure Bootloader.
+	* Default clock speed: 39 MHz; to increase to 78 MHz, change in Clock / SysConfig.
+	* Secure boot is optional and requires firmware signing and key provisioning.
+
+#Breakout Pads & Debug Connector
+	* Most EFR32 pins are broken out on top and bottom edges for easy access.
+	* Debug connector includes Vtarget (reference voltage) for logic-level shifting.
+	Pinout:
+	   -> TMS / SWDIO / C2D → JTAG/c2D test mode select, serial wire data
+	   -> TCK / SWCLK / C2CK → JTAG/c2 clock
+	   -> TDO / SWO → JTAG test data out / serial wire output
+
+#Power Options, Energy Monitoring & Battery
+	* On‑board power switch
+	* AEM (Advanced Energy Monitor) measures current consumption via debugger interface
+	* BAT position supports coin cell (20 mm CR2032) to power the device standalone
+
+#Boot & Flash Process
+	1) Identify board & microcontroller
+		-> Check board version
+		-> Confirm microcontroller/SoC bootloader & flashing requirements
+	2) Hardware setup
+		->Power supply
+		-> Jumper/switch settings for boot mode or power domains
+	3) Connections
+		-> Connect debugger/programmer via 20‑pin header to WSTK
+		-> USB to host PC
+	4) Software setup
+		-> Install development environment (e.g., Simplicity Studio)
+		-> Install drivers
+		-> Check if bootloader is present; if not, flash it using a debugger
+	5) Booting the board
+		-> Power on
+		-> Hold the boot-mode button / set jumpers
+		-> Use terminal to verifyBoot to confirm bootloader is running
+	6) Flashing firmware
+		-> Prepare firmware binary for your application
+		-> Use Simplicity Studio’s Flash programmer tool:
+			* Open SS and connect board
+			* Select your board
+			* Use Flash Programmer to load firmware binary and choose “Program”
+		-> Or use UART/USB bootloader with a utility (e.g. stm32flash -w firmware.bin -v /
+		   dev/ttyUSB0)
+
+	7) Verify Flash
+		-> Confirm writing success via tool output
+	8) Troubleshooting
+		-> Connection issues: recheck header, cabling, power
+		-> Bootloader issues: use verifyBoot or re-flash bootloader
+		-> Firmware issues: check build errors if compiling your own
+		-> Logs: capture bootloader / application logs via UART
+#Bootloader Types in Simplicity Studio v5 (SSv5)
+	1. Internal Bootloader
+		-> Preloaded in some EFR32/EFM32 devices
+		-> Stored in internal flash or ROM
+		-> Usually Gecko Bootloader (2-stage or single-stage)
+		-> Used for initial programming, recovery, or DFU (Device Firmware Upgrade)
+
+	2. Application Bootloader
+		-> Loaded by the internal bootloader
+		-> Resides in user flash
+		-> Responsible for loading the main application firmware
+		-> Can support secure boot features (e.g. signature verification)
+
+	3. Standalone Bootloader
+		-> A complete bootloader that runs independently of an application
+		-> Supports features like OTA, UART, SPI, I2C, USB DFU
+		-> Used in minimal or production firmware setups
+		-> Includes legacy and Gecko bootloader variants
+
+	4. Secure Bootloader
+		-> Validates the authenticity and integrity of firmware before execution
+		-> Uses digital signature verification (e.g. ECDSA)
+		-> Secure key storage with TrustZone or Secure Element
+		-> Often a requirement for connected or security-critical devices
+
+	5. UART/USB DFU Bootloader
+		-> Used for firmware upgrades over UART or USB
+		-> Interfaces with tools like Simplicity Commander or efm32flash
+		-> Suitable for production-line programming or field updates
+
+	6. OTA (Over-the-Air) Bootloader
+		-> For wireless firmware updates (BLE, Zigbee, Thread)
+		-> Typically used in IoT applications
+		-> Works with protocols like GBL (Gecko Bootloader Format)
+
