@@ -17,7 +17,15 @@ https://www.notion.so/Embedded-Software-Trainee-Project-21da2c234f678020b9faea42
     3) UDP Chat App
         i) Send/Receive Message
         ii) Using CommandLine Arugments
-        
+Week2 :
+
+TOPIC :
+    
+    1) Learn BLE (LE)
+
+TASKS:
+    
+    1) BLE Range Test using Silicon Labs BLE stack
 
 
 
