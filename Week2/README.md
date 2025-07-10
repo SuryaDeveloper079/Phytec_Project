@@ -2,11 +2,13 @@
   
     1) To Install the Simplicity Studio v5 
     2) To Connect the Board on pc Through the USB BRD4401C Rev A01 (or) EFR32xG28
-      <img width="937" height="918" alt="image" src="https://github.com/user-attachments/assets/9495aaa3-b1b2-4286-a19d-47b31edc40e7" />
+  <img width="937" height="918" alt="image" src="https://github.com/user-attachments/assets/9495aaa3-b1b2-4286-a19d-47b31edc40e7" />
+    
     3) Create the Project Click "Create new Project"
     4) To Open new Window To select "Target/SDK" and click the Next
     5) To choose the Sample BLE Project "Bluetooth_SoC_Blinky" an dclick next
-      <img width="934" height="413" alt="image" src="https://github.com/user-attachments/assets/124fb70a-87c0-4037-ac9e-2bcefd86796d" />
+  <img width="934" height="413" alt="image" src="https://github.com/user-attachments/assets/124fb70a-87c0-4037-ac9e-2bcefd86796d" />
+  
     6) Enter the "Project Name" 
     7) Then to Create the Bootloader To flash the Board
     8) To create the Project follow these above steps
